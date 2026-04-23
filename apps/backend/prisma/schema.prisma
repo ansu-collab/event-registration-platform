@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Village {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  events    Event[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+}
+
+model Event {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  villageId   Int
+  village     Village    @relation(fields: [villageId], references: [id], onDelete: Cascade)
+  timeSlots   TimeSlot[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([name, villageId])
+  @@index([villageId])
+}
+
+model TimeSlot {
+  id            Int            @id @default(autoincrement())
+  time          String
+  eventId       Int
+  event         Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  registrations Registration[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([eventId, time])
+  @@index([eventId])
+}
+
+model Registration {
+  id               Int      @id @default(autoincrement())
+  groupName        String
+  participantCount Int
+  date             DateTime @db.Date
+  timeSlotId       Int
+  timeSlot         TimeSlot @relation(fields: [timeSlotId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([timeSlotId, date])
+  @@index([date])
+  @@index([groupName, date])
+}
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
