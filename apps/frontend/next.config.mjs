@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001',
     NEXT_PUBLIC_EVENT_START_DATE: process.env.NEXT_PUBLIC_EVENT_START_DATE ?? '2026-07-01',

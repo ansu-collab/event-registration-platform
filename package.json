@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "backend:dev": "npm run start:dev --workspace=apps/backend",
-    "frontend:dev": "npm run dev --workspace=apps/frontend",
     "db:migrate": "npm run db:migrate --workspace=apps/backend",
     "db:seed": "npm run db:seed --workspace=apps/backend",
     "db:studio": "npm run db:studio --workspace=apps/backend",
@@ -12,7 +11,6 @@
     "test:e2e": "npm run test:e2e --workspace=apps/backend"
   },
   "workspaces": [
-    "apps/backend",
-    "apps/frontend"
+    "apps/backend"
   ]
 }
